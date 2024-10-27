@@ -26,10 +26,12 @@ const config: ForgeConfig = {
     new MakerDeb({})],
   publishers: [
       new PublisherGithub({
-          repository: {
-            owner: 'GothicMultiplayer',
-            name: 'gmp-launcher'
-          },
+        repository: {
+          owner: 'GothicMultiplayer',
+          name: 'gmp-launcher'
+        },
+        draft: true,
+        prerelease: false,
         generateReleaseNotes: true,
       })
   ],

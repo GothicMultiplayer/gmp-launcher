@@ -6,8 +6,10 @@ on:
       - '*'
 
 jobs:
-  build:
+  publish:
     runs-on: windows-latest
+    permissions:
+      deployments: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -21,4 +23,4 @@ jobs:
       - name: Publish
         run: npm run publish
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
