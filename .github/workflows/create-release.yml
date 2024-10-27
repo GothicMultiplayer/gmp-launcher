@@ -8,8 +8,7 @@ on:
 jobs:
   publish:
     runs-on: windows-latest
-    permissions:
-      deployments: write
+    permissions: write-all
     steps:
       - uses: actions/checkout@v4
         with:
