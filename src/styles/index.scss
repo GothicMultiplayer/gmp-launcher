@@ -1,0 +1,35 @@
+@import "bootstrap/scss/bootstrap.scss";
+
+body {
+  padding-top: 3.5rem;
+}
+
+.texturina {
+  font-family: "Texturina", serif;
+}
+
+.clip-text {
+  text-overflow: clip;
+  mask: linear-gradient(90deg, red, red calc(100% - 2ch), transparent);
+}
+
+.description-pre-line {
+  white-space: pre-line;
+}
+
+.blur-background:before {
+  filter: blur(1.25px) brightness(60%) saturate(85%);
+  background-image: url("/images/background.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
