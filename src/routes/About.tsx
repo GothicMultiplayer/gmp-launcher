@@ -3,10 +3,15 @@ import DiscordIcon from "bootstrap-icons/icons/discord.svg?react"
 import DocsIcon from "bootstrap-icons/icons/journal-code.svg?react"
 import GithubIcon from "bootstrap-icons/icons/github.svg?react"
 import DownloadIcon from "bootstrap-icons/icons/download.svg?react"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function About() {
     const [show, setShow] = useState(false);
+    const [version, setVersion] = useState("");
+
+    useEffect(() => {
+        (async () => setVersion(await window.electronAPI.getAppVersion()))();
+    }, []);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -50,7 +55,7 @@ export default function About() {
                 </Col>
 
                 <Col>
-                    GMP is a multiplayer modification for Gothic II: Night of the Raven
+                    GMP {version} is a multiplayer modification for Gothic II: Night of the Raven
                     <br/>
                     enabling you to play on customized dedicated servers.
                 </Col>

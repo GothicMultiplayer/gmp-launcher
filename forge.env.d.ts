@@ -10,6 +10,7 @@ declare interface ElectronAPI {
     getLauncherSettings: () => Promise<LauncherSettings>;
     saveGmpSettings: (settings: GmpSettings) => Promise<void>;
     saveLauncherSettings: (settings: LauncherSettings) => Promise<void>;
+    getAppVersion: () => Promise<string>;
 }
 
 declare interface Window {

@@ -9,6 +9,7 @@ export const electronApi: ElectronAPI = {
     getLauncherSettings: () => ipcRenderer.invoke('get-launcher-settings'),
     saveGmpSettings: (settings: GmpSettings) => ipcRenderer.send('save-gmp-settings', settings),
     saveLauncherSettings: (settings: LauncherSettings) => ipcRenderer.send('save-launcher-settings', settings),
+    getAppVersion: () => ipcRenderer.invoke('get-app-version'),
 };
 
 contextBridge.exposeInMainWorld('electronAPI', electronApi);

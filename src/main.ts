@@ -230,6 +230,7 @@ function initEvents(mainWindow: BrowserWindow) {
   ipcMain.handle("select-gothic-path", handleSelectGothicPath);
   ipcMain.handle("get-gmp-settings", getGmpSettings);
   ipcMain.handle("get-launcher-settings", getLauncherSettings);
+  ipcMain.handle("get-app-version", async () => app.getVersion());
   ipcMain.on("open-folder", handleOpenChatlogsFolder);
   ipcMain.on("save-gmp-settings", handleSaveGmpSettings);
   ipcMain.on("save-launcher-settings", handleSaveLauncherSettings);
