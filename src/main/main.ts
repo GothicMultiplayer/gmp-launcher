@@ -78,8 +78,8 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 
 const settingsPath = `${app.getPath('userData')}/settings.json`;
-const gmpUserDataPath = path.normalize(`${app.getPath('userData')}/../GothicMultiplayer`);
-const gmpSettingsPath = `${gmpUserDataPath}/gmp_config.cfg`;
+const gmpSettingsPath = `${app.getPath('userData')}/gmp.ini`;
+const gmpChatPath = `${app.getPath('userData')}/Chat`;
 
 async function handleSelectGothicPath(_event: IpcMainInvokeEvent, currentPath: string) {
   const {canceled, filePaths} = await dialog.showOpenDialog({
@@ -96,9 +96,8 @@ async function handleSelectGothicPath(_event: IpcMainInvokeEvent, currentPath: s
 }
 
 async function handleOpenChatlogsFolder() {
-  const chatlogsPath = `${gmpUserDataPath}/Chat`;
-  await fs.mkdir(chatlogsPath, { recursive: true });
-  await shell.openPath(chatlogsPath);
+  await fs.mkdir(gmpChatPath, { recursive: true });
+  await shell.openPath(gmpChatPath);
 }
 
 async function handleSaveGmpSettings(_event: IpcMainInvokeEvent, settings: GmpSettings) {
