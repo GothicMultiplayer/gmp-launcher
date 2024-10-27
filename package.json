@@ -2,7 +2,7 @@
   "name": "gmp-launcher",
   "productName": "GMP",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "GMP is a multiplayer modification for Gothic II: Night of the Raven",
   "main": ".vite/build/main.js",
   "scripts": {
