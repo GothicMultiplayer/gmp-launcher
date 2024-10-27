@@ -173,7 +173,7 @@ async function initConfigs() {
     const gmpData = await fs.readFile(gmpSettingsPath, 'ascii');
     const parsedGmpData = parse(gmpData);
     gmpSettings.lang = parseInt(parsedGmpData.lang, 10) || gmpSettings.lang;
-    gmpSettings.chatlines = parseInt(parsedGmpData.chatlines) || gmpSettings.chatlines;
+    gmpSettings.chatlines = parseInt(parsedGmpData.chatlines, 10) || gmpSettings.chatlines;
     gmpSettings.chatlog = (parsedGmpData.chatlog ?? gmpSettings.chatlog.toString()) === "1";
     gmpSettings.toggleWalkmode = (parsedGmpData.toggleWalkmode ?? gmpSettings.toggleWalkmode.toString()) === "1";
     gmpSettings.disableCapslockInChat = (parsedGmpData.disableCapslockInChat ?? gmpSettings.disableCapslockInChat.toString()) === "1";
