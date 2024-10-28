@@ -128,6 +128,7 @@ async function handleConnect(_event: IpcMainInvokeEvent, url: string, nickname: 
     if (settings.launcher.gothicPath.length === 0) {
       return { error: "Please select a valid path to Gothic in the Settings tab." };
     }
+    await saveSettings();
   }
   // TODO: check gothic path validity
   const args = [
