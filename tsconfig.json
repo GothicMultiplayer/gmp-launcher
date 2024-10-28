@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "commonjs",
+    "module": "ESNext",
     "jsx": "react-jsx",
     "strict": true,
     "importHelpers": true,
@@ -11,7 +11,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "outDir": "dist",
-    "moduleResolution": "node",
-    "resolveJsonModule": true
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "types": ["forge.env.d.ts"]
   }
 }
