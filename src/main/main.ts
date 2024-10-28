@@ -1,9 +1,13 @@
-import {app, session, BrowserWindow, ipcMain, dialog, IpcMainInvokeEvent, shell, protocol} from 'electron';
+import {app, BrowserWindow, dialog, ipcMain, IpcMainInvokeEvent, protocol, session, shell} from 'electron';
 import path from 'node:path';
 import started from "electron-squirrel-startup";
 import fs from 'node:fs/promises'
+import {execFile} from "node:child_process";
 import {parse, stringify} from 'ini'
 import {updateElectronApp} from "update-electron-app";
+import * as util from "node:util";
+
+const asyncExecFile = util.promisify(execFile);
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -14,12 +18,14 @@ if (app.isPackaged) {
   updateElectronApp();
 }
 
+let mainWindow: BrowserWindow;
+
 const createWindow = () => {
   initConfigs();
   setCSP();
 
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: settings.window.width,
     height: settings.window.height,
     x: settings.window.x,
@@ -80,11 +86,12 @@ app.on('activate', () => {
 const settingsPath = `${app.getPath('userData')}/settings.json`;
 const gmpSettingsPath = `${app.getPath('userData')}/gmp.ini`;
 const gmpChatPath = `${app.getPath('userData')}/Chat`;
+const clientPath = app.isPackaged ? `${process.cwd()}/resource/client` : `${process.cwd()}/client`;
 
-async function handleSelectGothicPath(_event: IpcMainInvokeEvent, currentPath: string) {
+async function handleSelectGothicPath() {
   const {canceled, filePaths} = await dialog.showOpenDialog({
     title: "Select Gothic path",
-    defaultPath: currentPath,
+    defaultPath: settings.launcher.gothicPath,
     properties: ["openDirectory"],
   });
   if (canceled) {
@@ -110,6 +117,47 @@ async function handleSaveLauncherSettings(_event: IpcMainInvokeEvent, set: Launc
     settings.launcher = set;
     await saveSettings();
   }
+}
+
+async function handleConnect(_event: IpcMainInvokeEvent, url: string, nickname: string, version: string) {
+  if (settings.launcher.gothicPath.length === 0) {
+    settings.launcher.gothicPath = await handleSelectGothicPath();
+    if (settings.launcher.gothicPath.length === 0) {
+      return { error: "Please select a valid path to Gothic in the Settings tab." };
+    }
+  }
+  // TODO: check gothic path validity
+  const args = [
+    `--gothic=${settings.launcher.gothicPath}/System/Gothic2.exe`,
+    `--host=${url}`,
+    `--nickname=${nickname}`,
+    `--dll=${clientPath}/${version}/gmp.dll`
+  ];
+  try {
+    const {stderr} = await asyncExecFile(`${clientPath}/gmpinjector`, args, { windowsHide: true });
+    if (stderr) {
+      return { error: stderr };
+    }
+  } catch (error) {
+    console.log(error);
+    let errorText = "unknown";
+    if (error?.stderr) {
+      errorText = error.stderr;
+    }
+    return { error: errorText };
+  }
+  
+  return {};
+}
+
+async function handleMinimize() {
+  mainWindow.minimize();
+}
+
+async function getAvailableVersions() {
+  return (await fs.readdir(clientPath, { withFileTypes: true }))
+      .filter(dirent => dirent.isDirectory())
+      .map(dirent => dirent.name);
 }
 
 async function getGmpSettings() {
@@ -230,6 +278,9 @@ function initEvents(mainWindow: BrowserWindow) {
   ipcMain.handle("get-gmp-settings", getGmpSettings);
   ipcMain.handle("get-launcher-settings", getLauncherSettings);
   ipcMain.handle("get-app-version", async () => app.getVersion());
+  ipcMain.handle("connect-to-server", handleConnect);
+  ipcMain.handle("minimize", handleMinimize);
+  ipcMain.handle("get-available-versions", getAvailableVersions);
   ipcMain.on("open-folder", handleOpenChatlogsFolder);
   ipcMain.on("save-gmp-settings", handleSaveGmpSettings);
   ipcMain.on("save-launcher-settings", handleSaveLauncherSettings);

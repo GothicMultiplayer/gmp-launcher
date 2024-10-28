@@ -3,13 +3,16 @@
 import {contextBridge, ipcRenderer} from 'electron';
 
 export const electronApi: ElectronAPI = {
-    selectGothicPath: (currentPath: string) => ipcRenderer.invoke('select-gothic-path', currentPath),
+    selectGothicPath: () => ipcRenderer.invoke('select-gothic-path'),
     openChatlogsFolder: () => ipcRenderer.send('open-folder'),
     getGmpSettings: () => ipcRenderer.invoke('get-gmp-settings'),
     getLauncherSettings: () => ipcRenderer.invoke('get-launcher-settings'),
     saveGmpSettings: (settings: GmpSettings) => ipcRenderer.send('save-gmp-settings', settings),
     saveLauncherSettings: (settings: LauncherSettings) => ipcRenderer.send('save-launcher-settings', settings),
+    getAvailableVersions: () => ipcRenderer.invoke('get-available-versions'),
     getAppVersion: () => ipcRenderer.invoke('get-app-version'),
+    connectToServer: (url: string, nickname: string, version: string) => ipcRenderer.invoke('connect-to-server', url,  nickname, version),
+    minimize: () => ipcRenderer.invoke('minimize'),
 };
 
 contextBridge.exposeInMainWorld('electronAPI', electronApi);

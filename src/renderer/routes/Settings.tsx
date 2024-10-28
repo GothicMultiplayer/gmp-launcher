@@ -18,7 +18,7 @@ export default function Settings() {
     const [disableCapslockInChat, setDisableCapslockInChat] = useState(false);
 
     const changePath = async () => {
-        const result: string = await window.electronAPI.selectGothicPath(launcherSettings?.gothicPath ?? '');
+        const result: string = await window.electronAPI.selectGothicPath();
         if (result) {
             const res = {...launcherSettings as LauncherSettings, gothicPath: result};
             setLauncherSettings(res);

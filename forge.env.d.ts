@@ -5,17 +5,24 @@ declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
 declare const MAIN_WINDOW_VITE_NAME: string;
 
 declare interface ElectronAPI {
-    selectGothicPath: (str: string) => Promise<string>;
+    selectGothicPath: () => Promise<string>;
     openChatlogsFolder: () => Promise<void>;
     getGmpSettings: () => Promise<GmpSettings>;
     getLauncherSettings: () => Promise<LauncherSettings>;
     saveGmpSettings: (settings: GmpSettings) => Promise<void>;
     saveLauncherSettings: (settings: LauncherSettings) => Promise<void>;
+    getAvailableVersions: () => Promise<string[]>;
     getAppVersion: () => Promise<string>;
+    connectToServer: (url: string, nickname: string, version: string) => Promise<Result>;
+    minimize: () => Promise<void>;
 }
 
 declare interface Window {
     electronAPI: ElectronAPI,
+}
+
+declare interface Result {
+    error?: string;
 }
 
 declare interface LauncherSettings {
