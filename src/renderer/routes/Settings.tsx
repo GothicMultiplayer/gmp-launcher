@@ -82,7 +82,7 @@ export default function Settings() {
                 </Col>
                 <Col as={FormGroup} controlId="gmp-chatlines">
                     <FormLabel>Chatlines</FormLabel>
-                    <FormControl type="number" min={1} max={15} value={chatlines}
+                    <FormControl type="number" min={5} max={30} value={chatlines}
                                  onChange={(v) => setChatlines(+v.target.value)}/>
                 </Col>
                 <Col xs={3} as={FormGroup} controlId="gmp-chatlog">
