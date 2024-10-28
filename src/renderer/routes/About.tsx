@@ -55,7 +55,9 @@ export default function About() {
                 </Col>
 
                 <Col>
-                    GMP {version} is a multiplayer modification for Gothic II: Night of the Raven
+                    GMP Launcher v{version}
+                    <br/>
+                    GMP is a multiplayer modification for Gothic II: Night of the Raven
                     <br/>
                     enabling you to play on customized dedicated servers.
                 </Col>
