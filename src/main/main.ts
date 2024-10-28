@@ -133,7 +133,7 @@ async function handleConnect(_event: IpcMainInvokeEvent, url: string, nickname: 
   // TODO: check gothic path validity
   const args = [
     `--gothic=${settings.launcher.gothicPath}/System/Gothic2.exe`,
-    `--host=${url}`,
+    `--host=${url.replace(/^https?:\/\//, '')}`,
     `--nickname=${nickname}`,
     `--dll=${clientPath}/${version}/gmp.dll`
   ];
