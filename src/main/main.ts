@@ -142,10 +142,9 @@ async function handleConnect(_event: IpcMainInvokeEvent, url: string, nickname: 
       return { error: stderr };
     }
   } catch (error) {
-    console.log(error);
     let errorText = "unknown";
-    if (error?.stderr) {
-      errorText = error.stderr;
+    if (error instanceof Error) {
+      errorText = (error as Error & {stderr: string}).stderr;
     }
     return { error: errorText };
   }
