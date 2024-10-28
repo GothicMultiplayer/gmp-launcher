@@ -1,4 +1,4 @@
-import { fixupConfigRules } from "@eslint/compat";
+import {fixupConfigRules, includeIgnoreFile} from "@eslint/compat";
 import globals from "globals";
 import tsParser from "@typescript-eslint/parser";
 import path from "node:path";
@@ -14,6 +14,7 @@ const compat = new FlatCompat({
     recommendedConfig: js.configs.recommended,
     allConfig: js.configs.all
 });
+const gitignorePath = path.resolve(__dirname, ".gitignore");
 
 export default [...fixupConfigRules(compat.extends(
     "eslint:recommended",
@@ -39,5 +40,9 @@ export default [...fixupConfigRules(compat.extends(
         rules: {
             'react-compiler/react-compiler': 'error',
         },
+    },
+    includeIgnoreFile(gitignorePath),
+    {
+        files: ["**/*.ts", "**/*.tsx"]
     }
 ];
