@@ -64,4 +64,13 @@ const servers: ServerResponse[] = [{
     players: 23,
     maxPlayers: 100,
     version: "1.7.0-reveares+1",
+}, {
+    name: "Eskalon Online",
+    abbreviation: "eso",
+    online: true,
+    description: "Vulkaninselabenteuer",
+    url: "http://localhost:23005",
+    players: 40,
+    maxPlayers: 100,
+    version: "1.7.0-sabrosa+1",
 },];
