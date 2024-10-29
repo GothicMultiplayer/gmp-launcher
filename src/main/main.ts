@@ -90,7 +90,7 @@ const settingsPath = `${app.getPath('userData')}/settings.json`;
 const gmpSettingsPath = `${app.getPath('userData')}/gmp.ini`;
 const favoritesPath = `${app.getPath('userData')}/favorites.json`;
 const gmpChatPath = `${app.getPath('userData')}/Chat`;
-const clientPath = app.isPackaged ? `${process.cwd()}/resource/client` : `${process.cwd()}/client`;
+const clientPath = app.isPackaged ? `${process.cwd()}/resources/client` : `${process.cwd()}/client`;
 
 async function handleSelectGothicPath() {
   const {canceled, filePaths} = await dialog.showOpenDialog({
