@@ -28,26 +28,26 @@ export default function ServerSearch(props: {search: string, setSearch: (s: stri
     }
 
     const handleAlphaSort = () => {
-        if (props.sortBy === "ALPHA_UP") {
-            props.setSortBy("ALPHA_DOWN");
-        } else {
+        if (props.sortBy === "ALPHA_DOWN") {
             props.setSortBy("ALPHA_UP");
+        } else {
+            props.setSortBy("ALPHA_DOWN");
         }
     };
 
     const handleNumericSort = () => {
-        if (props.sortBy === "NUMERIC_UP") {
-            props.setSortBy("NUMERIC_DOWN");
-        } else {
+        if (props.sortBy === "NUMERIC_DOWN") {
             props.setSortBy("NUMERIC_UP");
+        } else {
+            props.setSortBy("NUMERIC_DOWN");
         }
     };
 
     const handleFavoriteSort = () => {
-        if (props.sortBy === "FAVORITES_UP") {
-            props.setSortBy("FAVORITES_DOWN");
-        } else {
+        if (props.sortBy === "FAVORITES_DOWN") {
             props.setSortBy("FAVORITES_UP");
+        } else {
+            props.setSortBy("FAVORITES_DOWN");
         }
     };
 
