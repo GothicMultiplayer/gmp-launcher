@@ -88,6 +88,7 @@ app.on('activate', () => {
 
 const settingsPath = `${app.getPath('userData')}/settings.json`;
 const gmpSettingsPath = `${app.getPath('userData')}/gmp.ini`;
+const favoritesPath = `${app.getPath('userData')}/favorites.json`;
 const gmpChatPath = `${app.getPath('userData')}/Chat`;
 const clientPath = app.isPackaged ? `${process.cwd()}/resource/client` : `${process.cwd()}/client`;
 
@@ -120,6 +121,11 @@ async function handleSaveLauncherSettings(_event: IpcMainInvokeEvent, set: Launc
     settings.launcher = set;
     await saveSettings();
   }
+}
+
+async function handleSaveFavorites(_event: IpcMainInvokeEvent, favs: string[]) {
+  favoriteServers = favs;
+  await saveFavorites();
 }
 
 async function handleConnect(_event: IpcMainInvokeEvent, url: string, nickname: string, version: string) {
@@ -171,12 +177,20 @@ async function getLauncherSettings() {
   return settings.launcher;
 }
 
+async function getFavoriteServers() {
+  return favoriteServers;
+}
+
 async function saveSettings() {
   await fs.writeFile(settingsPath, JSON.stringify(settings));
 }
 
 async function saveGmpSettings() {
   await fs.writeFile(gmpSettingsPath, stringify(settings), "ascii");
+}
+
+async function saveFavorites() {
+  await fs.writeFile(favoritesPath, JSON.stringify(favoriteServers));
 }
 
 let gmpSettings: GmpSettings = {
@@ -204,6 +218,8 @@ let settings: Settings = {
   }
 }
 
+let favoriteServers: string[] = [];
+
 async function initConfigs() {
   try {
     const data = await fs.readFile(settingsPath, 'utf8');
@@ -215,6 +231,15 @@ async function initConfigs() {
     });
     console.log("settings", parsedData);
     settings = {...settings, ...parsedData};
+  } catch (err) {
+    console.error(err);
+  }
+
+  try {
+    const data = await fs.readFile(favoritesPath, 'utf8');
+    const parsedData = JSON.parse(data);
+    console.log("favorites", parsedData);
+    favoriteServers = parsedData;
   } catch (err) {
     console.error(err);
   }
@@ -254,12 +279,14 @@ function initEvents(mainWindow: BrowserWindow) {
   ipcMain.handle("get-gmp-settings", getGmpSettings);
   ipcMain.handle("get-launcher-settings", getLauncherSettings);
   ipcMain.handle("get-app-version", async () => app.getVersion());
+  ipcMain.handle("get-favorite-servers", getFavoriteServers);
   ipcMain.handle("connect-to-server", handleConnect);
   ipcMain.handle("minimize", handleMinimize);
   ipcMain.handle("get-available-versions", getAvailableVersions);
   ipcMain.on("open-folder", handleOpenChatlogsFolder);
   ipcMain.on("save-gmp-settings", handleSaveGmpSettings);
   ipcMain.on("save-launcher-settings", handleSaveLauncherSettings);
+  ipcMain.on("save-favorite-servers", handleSaveFavorites);
 }
 
 function setCSP() {

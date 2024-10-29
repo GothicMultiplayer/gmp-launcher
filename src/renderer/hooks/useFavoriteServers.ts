@@ -1,6 +1,22 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-export default function useFavoriteServers() {
-    // TODO: load from file
-    return useState<string[]>(["http://localhost:23000", "http://localhost:23004"]);
+export default function useFavoriteServers(): [string[]|undefined, (newFavorites: string[]) => void] {
+    const [favorites, setFavorites] = useState<string[]|undefined>(undefined);
+
+    useEffect(() => {
+        (async () => {
+            const data = await window.electronAPI.getFavoriteServers();
+            setFavorites(data);
+        })();
+    }, []);
+
+    const handleSetFavorites = (newFavorites: string[]) => {
+        (async () => {
+            await window.electronAPI.saveFavoriteServers(newFavorites);
+            const data = await window.electronAPI.getFavoriteServers();
+            setFavorites(data);
+        })();
+    }
+    
+    return [favorites, handleSetFavorites];
 }

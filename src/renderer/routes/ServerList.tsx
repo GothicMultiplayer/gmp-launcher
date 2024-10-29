@@ -6,7 +6,7 @@ import StarFullIcon from "bootstrap-icons/icons/star-fill.svg?react"
 import OfflineIcon from "bootstrap-icons/icons/cloud-slash.svg?react"
 import {Link} from "react-router-dom";
 import {Server} from "../interfaces/server";
-import React, {ChangeEvent, useState} from "react";
+import {ChangeEvent, useState} from "react";
 import useServers from "../hooks/useServers";
 import ServerSearch from "../components/ServerSearch";
 import useServerSortOrder from "../hooks/useServerSortOrder";
@@ -31,11 +31,11 @@ export default function ServerList() {
 
     const [sortBy, setSortBy] = useServerSortOrder("NUMERIC_DOWN");
 
-    const {data} = useServers(publicServers.concat(favoriteServers.filter(b => !publicServers.find(a => a === b))));
+    const {data} = useServers(publicServers.concat(favoriteServers?.filter(b => !publicServers.find(a => a === b)) ?? []));
 
     const servers: Server[] = (data ?? [])
         .filter(s => search.length === 0 || s.name.toUpperCase().includes(search.toUpperCase()))
-        .map(s => ({...s, favorite: favoriteServers.includes(s.url)}))
+        .map(s => ({...s, favorite: favoriteServers?.includes(s.url) ?? false}))
         .sort((a, b) => {
             switch (sortBy) {
                 case "ALPHA_DOWN":
@@ -60,7 +60,9 @@ export default function ServerList() {
     const handleShowRemoveServerModal = () => setShowRemoveServerModal(true);
 
     const removeServer = (url: string) => {
-        setFavoriteServers(favoriteServers.filter(f => f !== url));
+        if (favoriteServers !== undefined) {
+            setFavoriteServers(favoriteServers.filter(f => f !== url));
+        }
     }
 
     const toggleFavorite = (server: Server) => {
@@ -71,7 +73,7 @@ export default function ServerList() {
                 setRemoveServerName(server.name);
                 handleShowRemoveServerModal();
             }
-        } else {
+        } else if (favoriteServers !== undefined) {
             setFavoriteServers([...favoriteServers, server.url]);
         }
     }
@@ -87,7 +89,7 @@ export default function ServerList() {
     }
 
     const addServer = () => {
-        if (!addUrl) {
+        if (!addUrl || favoriteServers === undefined) {
             return;
         }
 
