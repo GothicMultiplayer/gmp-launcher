@@ -8,20 +8,21 @@ import {useState} from "react";
 import ErrorModal from "../components/ErrorModal";
 import ConnectingModal from "../components/ConnectingModal";
 import useAvailableVersions from "../hooks/useAvailableVersions";
+import useNickname from "../hooks/useNickname";
 
 export default function ServerDetails() {
-    const [nickname, setNickname] = useState("");
-
-    const [showError, setShowError] = useState(false);
-    const [errorText, setErrorText] = useState<string>("");
-    
-    const [showConnecting, setShowConnecting] = useState(false);
-    const [connectingText, setConnectingText] = useState<string>("");
-    
-    const {versions, isLoading} = useAvailableVersions();
-    
     const { id } = useParams();
     const {data: server} = useServer(id ?? "");
+    
+    const [nickname, setNickname] = useNickname(server?.url);
+    const [showError, setShowError] = useState(false);
+    const [errorText, setErrorText] = useState<string>("");
+
+    const [showConnecting, setShowConnecting] = useState(false);
+    const [connectingText, setConnectingText] = useState<string>("");
+
+    const {versions, isLoading} = useAvailableVersions();
+    
     if (server === undefined) {
         return <>Loading...</>
     }
@@ -35,7 +36,7 @@ export default function ServerDetails() {
         setShowConnecting(true);
         setShowError(false);
         
-        const result = await window.electronAPI.connectToServer(server.url, nickname, server.version);
+        const result = await window.electronAPI.connectToServer(server.url, nickname ?? "", server.version);
         if (result.error) {
             setShowConnecting(false);
             setErrorText(result.error);
@@ -70,7 +71,7 @@ export default function ServerDetails() {
                         <div>
                             <Form.Group className="mt-3" controlId="nickname">
                                 <Form.Label>Nickname</Form.Label>
-                                <Form.Control type="text" maxLength={19} value={nickname} onChange={(e) => setNickname(e.target.value)}></Form.Control>
+                                <Form.Control type="text" maxLength={19} value={nickname ?? ""} onChange={(e) => setNickname(e.target.value)}></Form.Control>
                             </Form.Group>
                         </div>
                         <div>

@@ -89,6 +89,7 @@ app.on('activate', () => {
 const settingsPath = `${app.getPath('userData')}/settings.json`;
 const gmpSettingsPath = `${app.getPath('userData')}/gmp.ini`;
 const favoritesPath = `${app.getPath('userData')}/favorites.json`;
+const nicknamesPath = `${app.getPath('userData')}/nicknames.json`;
 const gmpChatPath = `${app.getPath('userData')}/Chat`;
 const clientPath = app.isPackaged ? `${process.cwd()}/resources/client` : `${process.cwd()}/client`;
 
@@ -126,6 +127,11 @@ async function handleSaveLauncherSettings(_event: IpcMainInvokeEvent, set: Launc
 async function handleSaveFavorites(_event: IpcMainInvokeEvent, favs: string[]) {
   favoriteServers = favs;
   await saveFavorites();
+}
+
+async function handleSaveNickname(_event: IpcMainInvokeEvent, url: string, nickname: string) {
+  nicknames = {...nicknames, [url]: nickname};
+  await saveNicknames();
 }
 
 async function handleConnect(_event: IpcMainInvokeEvent, url: string, nickname: string, version: string) {
@@ -181,6 +187,10 @@ async function getFavoriteServers() {
   return favoriteServers;
 }
 
+function getNickname(_event: IpcMainInvokeEvent, url: string) {
+  return nicknames[url];
+}
+
 async function saveSettings() {
   await fs.writeFile(settingsPath, JSON.stringify(settings));
 }
@@ -191,6 +201,10 @@ async function saveGmpSettings() {
 
 async function saveFavorites() {
   await fs.writeFile(favoritesPath, JSON.stringify(favoriteServers));
+}
+
+async function saveNicknames() {
+  await fs.writeFile(nicknamesPath, JSON.stringify(nicknames));
 }
 
 let gmpSettings: GmpSettings = {
@@ -220,6 +234,8 @@ let settings: Settings = {
 
 let favoriteServers: string[] = [];
 
+let nicknames: Record<string, string> = {};
+
 async function initConfigs() {
   try {
     const data = await fs.readFile(settingsPath, 'utf8');
@@ -240,6 +256,15 @@ async function initConfigs() {
     const parsedData = JSON.parse(data);
     console.log("favorites", parsedData);
     favoriteServers = parsedData;
+  } catch (err) {
+    console.error(err);
+  }
+
+  try {
+    const data = await fs.readFile(nicknamesPath, 'utf8');
+    const parsedData = JSON.parse(data);
+    console.log("nicknames", parsedData);
+    nicknames = parsedData;
   } catch (err) {
     console.error(err);
   }
@@ -283,10 +308,12 @@ function initEvents(mainWindow: BrowserWindow) {
   ipcMain.handle("connect-to-server", handleConnect);
   ipcMain.handle("minimize", handleMinimize);
   ipcMain.handle("get-available-versions", getAvailableVersions);
+  ipcMain.handle("get-nickname", getNickname);
   ipcMain.on("open-folder", handleOpenChatlogsFolder);
   ipcMain.on("save-gmp-settings", handleSaveGmpSettings);
   ipcMain.on("save-launcher-settings", handleSaveLauncherSettings);
   ipcMain.on("save-favorite-servers", handleSaveFavorites);
+  ipcMain.on("save-nickname", handleSaveNickname);
 }
 
 function setCSP() {
