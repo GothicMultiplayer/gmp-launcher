@@ -21,7 +21,7 @@ export default function ServerDetails() {
     const [showConnecting, setShowConnecting] = useState(false);
     const [connectingText, setConnectingText] = useState<string>("");
 
-    const {versions, isLoading} = useAvailableVersions();
+    const versions = useAvailableVersions();
     
     if (server === undefined) {
         return <>Loading...</>
@@ -47,7 +47,7 @@ export default function ServerDetails() {
         }
     }
     
-    const versionAvailable = isLoading || versions.includes(server.version);
+    const versionAvailable = versions === undefined || versions.includes(server.version);
 
     return (
         <>
