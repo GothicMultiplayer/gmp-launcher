@@ -1,6 +1,11 @@
+import started from "electron-squirrel-startup";
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+if (started) {
+  app.quit();
+}
+
 import {app, BrowserWindow, dialog, ipcMain, IpcMainInvokeEvent, session, shell} from 'electron';
 import path from 'node:path';
-import started from "electron-squirrel-startup";
 import fs from 'node:fs/promises'
 import {execFile} from "node:child_process";
 import {parse, stringify} from 'ini'
@@ -8,16 +13,11 @@ import {updateElectronApp} from "update-electron-app";
 import * as util from "node:util";
 import {initProtocolHandler} from "./protocolHandler";
 
-const asyncExecFile = util.promisify(execFile);
-
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (started) {
-  app.quit();
-}
-
 if (app.isPackaged) {
   updateElectronApp();
 }
+
+const asyncExecFile = util.promisify(execFile);
 
 initProtocolHandler();
 

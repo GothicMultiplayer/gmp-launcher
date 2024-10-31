@@ -7,6 +7,7 @@ import { VitePlugin } from '@electron-forge/plugin-vite';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
 import PublisherGithub from "@electron-forge/publisher-github";
+import fs from "node:fs/promises";
 
 const config: ForgeConfig = {
   packagerConfig: {
@@ -76,6 +77,14 @@ const config: ForgeConfig = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
+  hooks:  {
+    postMake: async () => {
+      // Fix buggy delta releases on update.electronjs.org, see: https://github.com/electron/electron/issues/24149
+      const releasesFile = "./out/make/squirrel.windows/x64/RELEASES";
+      const data = (await fs.readFile(releasesFile)).toString().split(/\r\n|\n/);
+      await fs.writeFile(releasesFile, [data.at(-2), data.at(-1)].join("\r\n"))
+    },
+  },
 };
 
 export default config;
