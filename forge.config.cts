@@ -22,7 +22,8 @@ const config: ForgeConfig = {
     new MakerSquirrel({
       skipUpdateIcon: true,
       setupIcon: "images/icon.ico",
-      iconUrl: __dirname + "/images/icon.ico"
+      iconUrl: __dirname + "/images/icon.ico",
+      remoteReleases: "https://github.com/GothicMultiplayer/gmp-launcher",
     }),
     new MakerZIP({}, ['darwin']),
     new MakerRpm({}),
