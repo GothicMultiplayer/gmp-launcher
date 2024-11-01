@@ -25,7 +25,8 @@ const config: ForgeConfig = {
       setupIcon: "images/icon.ico",
       setupExe: "GMP-Setup.exe",
       iconUrl: "https://raw.githubusercontent.com/GothicMultiplayer/gmp-launcher/810fa898361fc35f90f13bb26f9190cae0d2a46d/images/icon.ico",
-      remoteReleases: "https://github.com/GothicMultiplayer/gmp-launcher",
+      // Disabled because delta releases are buggy on update.electronjs.org, see: https://github.com/electron/electron/issues/24149
+      //remoteReleases: "https://github.com/GothicMultiplayer/gmp-launcher",
     }),
     new MakerZIP({}, ['darwin']),
     new MakerRpm({}),
@@ -77,14 +78,6 @@ const config: ForgeConfig = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
-  hooks:  {
-    postMake: async () => {
-      // Fix buggy delta releases on update.electronjs.org, see: https://github.com/electron/electron/issues/24149
-      const releasesFile = "./out/make/squirrel.windows/x64/RELEASES";
-      const data = (await fs.readFile(releasesFile)).toString().split(/\r\n|\n/);
-      await fs.writeFile(releasesFile, [data.at(-2), data.at(-1)].join("\r\n"))
-    },
-  },
 };
 
 export default config;
