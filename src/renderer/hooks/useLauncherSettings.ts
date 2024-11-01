@@ -11,7 +11,7 @@ export default function useLauncherSettings(): [LauncherSettings|undefined, (new
     const handleSetSettings = (newSettings: LauncherSettings) => {
         (async () => {
             await window.electronAPI.saveLauncherSettings(newSettings);
-            setSettings(await window.electronAPI.getLauncherSettings());
+            setSettings(newSettings);
         })();
     }
 

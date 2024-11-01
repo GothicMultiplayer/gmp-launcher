@@ -49,7 +49,7 @@ declare interface Settings {
 }
 
 declare interface GmpSettings {
-    lang: number,
+    lang: string,
     chatlines: number,
     chatlog: boolean,
     toggleWalkmode: boolean,

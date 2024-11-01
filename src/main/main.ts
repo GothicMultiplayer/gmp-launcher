@@ -17,13 +17,12 @@ if (app.isPackaged) {
   updateElectronApp();
 }
 
-const asyncExecFile = util.promisify(execFile);
-
 initProtocolHandler();
 
 let mainWindow: BrowserWindow;
 
 const createWindow = () => {
+  gmpSettings.lang = app.getLocale().split('-')[0];
   initConfigs();
   setCSP();
 
@@ -134,10 +133,8 @@ async function handleSaveGmpSettings(_event: IpcMainInvokeEvent, settings: GmpSe
 }
 
 async function handleSaveLauncherSettings(_event: IpcMainInvokeEvent, set: LauncherSettings) {
-  if (settings.launcher !== set) {
-    settings.launcher = set;
-    await saveSettings();
-  }
+  settings.launcher = set;
+  await saveSettings();
 }
 
 async function handleSaveFavorites(_event: IpcMainInvokeEvent, favs: string[]) {
@@ -149,6 +146,8 @@ async function handleSaveNickname(_event: IpcMainInvokeEvent, url: string, nickn
   nicknames = {...nicknames, [url]: nickname};
   await saveNicknames();
 }
+
+const asyncExecFile = util.promisify(execFile);
 
 async function handleConnect(_event: IpcMainInvokeEvent, url: string, nickname: string, version: string) {
   if (settings.launcher.gothicPath.length === 0) {
@@ -212,7 +211,7 @@ async function saveSettings() {
 }
 
 async function saveGmpSettings() {
-  await fs.writeFile(gmpSettingsPath, stringify(settings), "ascii");
+  await fs.writeFile(gmpSettingsPath, stringify(gmpSettings), "ascii");
 }
 
 async function saveFavorites() {
@@ -224,7 +223,7 @@ async function saveNicknames() {
 }
 
 let gmpSettings: GmpSettings = {
-  lang: 0,
+  lang: "en",
   chatlines: 10,
   chatlog: false,
   toggleWalkmode: true,
@@ -288,11 +287,11 @@ async function initConfigs() {
   try {
     const gmpData = await fs.readFile(gmpSettingsPath, 'ascii');
     const parsedGmpData = parse(gmpData);
-    gmpSettings.lang = parseInt(parsedGmpData.lang, 10) || gmpSettings.lang;
+    gmpSettings.lang = parsedGmpData.lang ?? gmpSettings.lang;
     gmpSettings.chatlines = parseInt(parsedGmpData.chatlines, 10) || gmpSettings.chatlines;
-    gmpSettings.chatlog = (parsedGmpData.chatlog ?? gmpSettings.chatlog.toString()) === "1";
-    gmpSettings.toggleWalkmode = (parsedGmpData.toggleWalkmode ?? gmpSettings.toggleWalkmode.toString()) === "1";
-    gmpSettings.disableCapslockInChat = (parsedGmpData.disableCapslockInChat ?? gmpSettings.disableCapslockInChat.toString()) === "1";
+    gmpSettings.chatlog = parsedGmpData.chatlog ?? gmpSettings.chatlog;
+    gmpSettings.toggleWalkmode = parsedGmpData.toggleWalkmode ?? gmpSettings.toggleWalkmode;
+    gmpSettings.disableCapslockInChat = parsedGmpData.disableCapslockInChat ?? gmpSettings.disableCapslockInChat;
     console.log("gmpSettings", gmpSettings);
   } catch (err) {
     console.error(err);

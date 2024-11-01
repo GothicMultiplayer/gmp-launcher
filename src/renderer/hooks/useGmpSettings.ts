@@ -1,12 +1,19 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
-export default function useGmpSettings(): GmpSettings|undefined {
-    let settings: GmpSettings|undefined = undefined;
+export default function useGmpSettings(): [GmpSettings|undefined, (newSettings: GmpSettings) => void] {
+    const [settings, setSettings] = useState<GmpSettings|undefined>(undefined);
     useEffect(() => {
         (async () => {
-            settings = await window.electronAPI.getGmpSettings();
+            setSettings(await window.electronAPI.getGmpSettings());
         })();
     }, []);
 
-    return settings;
+    const handleSetSettings = (newSettings: GmpSettings) => {
+        (async () => {
+            await window.electronAPI.saveGmpSettings(newSettings);
+            setSettings(newSettings);
+        })();
+    }
+
+    return [settings, handleSetSettings];
 }
