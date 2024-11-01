@@ -54,12 +54,12 @@ export default function Settings() {
                         <Button type="button" variant="primary" onClick={changePath}>
                             Change Path
                         </Button>
-                        <FormControl type="text" placeholder="No path selected" disabled value={launcherSettings?.gothicPath ?? ""}/>
+                        <FormControl type="text" placeholder="No path selected" disabled value={launcherSettings.gothicPath}/>
                     </InputGroup>
                 </Col>
                 <Col xs={6} as={FormGroup} controlId="gmp-language">
                     <FormLabel>Language</FormLabel>
-                    <FormSelect aria-label="English" value={gmpSettings?.lang} onChange={v => changeGmpSetting("lang", v.target.value)}>
+                    <FormSelect aria-label="English" value={gmpSettings.lang} onChange={v => changeGmpSetting("lang", v.target.value)}>
                         <option value="en">English</option>
                         <option value="de">German</option>
                         <option value="pl">Polish</option>
@@ -68,14 +68,14 @@ export default function Settings() {
                 </Col>
                 <Col xs={6} as={FormGroup} controlId="gmp-chatlines">
                     <FormLabel>Chatlines</FormLabel>
-                    <FormControl type="number" min={5} max={30} value={gmpSettings?.chatlines}
-                                 onChange={(v) => changeGmpSetting("chatlines", +v.target.value)}/>
+                    <FormControl type="number" min={5} max={30} value={gmpSettings.chatlines}
+                                 onChange={v => changeGmpSetting("chatlines", +v.target.value)}/>
                 </Col>
                 <Col xs="auto" as={FormGroup} controlId="gmp-chatlog">
                     <FormCheck
                         type="switch"
                         label="Enable Chatlogs"
-                        checked={gmpSettings?.chatlog}
+                        checked={gmpSettings.chatlog}
                         onChange={v => changeGmpSetting("chatlog", v.target.checked)}
                     />
                 </Col>
@@ -88,7 +88,7 @@ export default function Settings() {
                     <FormCheck
                         type="switch"
                         label="Toggle walkmode (shift)"
-                        checked={gmpSettings?.toggleWalkmode}
+                        checked={gmpSettings.toggleWalkmode}
                         onChange={v => changeGmpSetting("toggleWalkmode", v.target.checked)}
                     />
                 </Col>
@@ -96,7 +96,7 @@ export default function Settings() {
                     <FormCheck
                         type="switch"
                         label="Disable Capslock in chat"
-                        checked={gmpSettings?.disableCapslockInChat}
+                        checked={gmpSettings.disableCapslockInChat}
                         onChange={v => changeGmpSetting("disableCapslockInChat", v.target.checked)}
                     />
                 </Col>
@@ -105,7 +105,7 @@ export default function Settings() {
                         type="switch"
                         id="develop-switch"
                         label="Enable debugging (for developer)"
-                        checked={launcherSettings?.devMode}
+                        checked={launcherSettings.devMode}
                         onChange={v => changeLauncherSetting("devMode", v.target.checked)}
                     />
                 </Col>
