@@ -164,6 +164,14 @@ async function handleConnect(_event: IpcMainInvokeEvent, url: string, nickname: 
     `--nickname=${nickname}`,
     `--dll=${clientPath}/${version}/gmp.dll`
   ];
+  if (settings.launcher.devMode) {
+    if (settings.launcher.zSpyLevel > 0) {
+      args.push(`--debug=${settings.launcher.zSpyLevel}`);
+    }
+    if (settings.launcher.enableGothicExceptionHandling) {
+      args.push("--exception");
+    }
+  }
   try {
     const {stderr} = await asyncExecFile(`${clientPath}/gmpinjector`, args, { windowsHide: true });
     if (stderr) {
