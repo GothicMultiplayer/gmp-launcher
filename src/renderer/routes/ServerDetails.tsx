@@ -9,6 +9,7 @@ import ErrorModal from "../components/ErrorModal";
 import ConnectingModal from "../components/ConnectingModal";
 import useAvailableVersions from "../hooks/useAvailableVersions";
 import useNickname from "../hooks/useNickname";
+import {sanitizeUrl} from "../libs/util";
 
 export default function ServerDetails() {
     const { id } = useParams();
@@ -49,13 +50,14 @@ export default function ServerDetails() {
     
     const versionAvailable = versions === undefined || versions.includes(server.version);
 
-    const hasCustomBackground = server.backgroundImage.length !== 0;
+    const customBackground = sanitizeUrl(server.backgroundImage);
 
     return (
         <>
-            <div className={`${hasCustomBackground ? "blurred-background" : ""}`}
-                 style={{...hasCustomBackground && {backgroundImage: `url(${server.backgroundImage})`}}}>
-            </div>
+            {customBackground &&
+                <div className="blurred-background" style={{backgroundImage: `url(${customBackground})`}}></div>
+            }
+
             <div className="pb-5 app-padding-top">
                 <Row>
                     <Col xs="auto">
