@@ -20,8 +20,9 @@ export default function About() {
         window.open(link, "_blank");
     };
 
-    return (<>
-            <Row className="py-5 text-center row-cols-1 gy-5">
+    return (
+        <div className="pb-5 app-padding-top">
+            <Row className="text-center row-cols-1 gy-5">
                 <Col>
                     <Row className="justify-content-center gy-3 row-cols-auto">
                         <Col>
@@ -110,6 +111,6 @@ export default function About() {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </>
+        </div>
     );
 }

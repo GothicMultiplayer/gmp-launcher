@@ -49,9 +49,14 @@ export default function ServerDetails() {
     
     const versionAvailable = versions === undefined || versions.includes(server.version);
 
+    const hasCustomBackground = server.backgroundImage.length !== 0;
+
     return (
         <>
-            <div className="py-5">
+            <div className={`${hasCustomBackground ? "blurred-background" : ""}`}
+                 style={{...hasCustomBackground && {backgroundImage: `url(${server.backgroundImage})`}}}>
+            </div>
+            <div className="pb-5 app-padding-top">
                 <Row>
                     <Col xs="auto">
                         <Button as={Link} variant="dark" to="/">
@@ -71,7 +76,8 @@ export default function ServerDetails() {
                         <div>
                             <Form.Group className="mt-3" controlId="nickname">
                                 <Form.Label>Nickname</Form.Label>
-                                <Form.Control type="text" maxLength={19} value={nickname ?? ""} onChange={(e) => setNickname(e.target.value)}></Form.Control>
+                                <Form.Control type="text" maxLength={19} value={nickname ?? ""}
+                                              onChange={(e) => setNickname(e.target.value)}></Form.Control>
                             </Form.Group>
                         </div>
                         <div>

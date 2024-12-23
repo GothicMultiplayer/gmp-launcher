@@ -44,7 +44,7 @@ const createWindow = () => {
     titleBarOverlay: {
       color: "#00000000",
       symbolColor: "#dee2e6",
-      // Needs to be the same as Header height and css body padding-top
+      // Needs to be the same as Header height
       height: 40
     },
   });

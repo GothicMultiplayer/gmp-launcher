@@ -1,8 +1,7 @@
 @import "bootstrap/scss/bootstrap.scss";
 
-body {
-  // Needs to be the same as Header height and BrowserWindow.titleBarOverlay.size
-  padding-top: 40px;
+.app-padding-top {
+  padding-top: 5rem;
 }
 
 .texturina {
@@ -18,14 +17,17 @@ body {
   white-space: pre-line;
 }
 
-.blur-background:before {
-  filter: blur(1.25px) brightness(60%) saturate(85%);
+.app-background {
   background-image: url("/images/background.avif");
+}
+
+.blurred-background {
+  filter: blur(1.25px) brightness(60%) saturate(85%);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
+  background-position: center;
 
-  content: "";
   position: fixed;
   left: 0;
   right: 0;

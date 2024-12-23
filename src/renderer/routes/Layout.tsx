@@ -8,6 +8,7 @@ export default function Layout() {
     const showFooter = location.pathname === "/about";
     return (<>
         <Header/>
+        <div className="app-background blurred-background"></div>
         <Container as="main">
             <Outlet/>
         </Container>

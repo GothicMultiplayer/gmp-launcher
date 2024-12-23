@@ -6,5 +6,6 @@ export interface ServerResponse {
     description: string,
     players: number,
     maxPlayers: number,
-    version: string
+    version: string,
+    backgroundImage: string,
 }

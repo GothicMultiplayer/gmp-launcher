@@ -101,7 +101,7 @@ export default function ServerList() {
     }
 
     return (<>
-        <div className="py-5">
+        <div className="pb-5 app-padding-top">
             <Row className="gy-3">
                 <Col xs={12}>
                     <Button onClick={handleShowAddServerModal} className="d-flex align-items-center">

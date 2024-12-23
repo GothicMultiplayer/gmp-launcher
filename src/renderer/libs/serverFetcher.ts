@@ -15,6 +15,7 @@ export default async function serverFetcher(url: string): Promise<ServerResponse
             players: 0,
             maxPlayers: 0,
             version: "",
+            backgroundImage: "",
         }
     }
     return response
@@ -37,6 +38,7 @@ const servers: ServerResponse[] = [{
     players: 76,
     maxPlayers: 100,
     version: "1.7.0-reveares+1",
+    backgroundImage: "https://strafkolonie-online.net/forum/images/style-17/custom/pageBG.jpg"
 }, {
     name: "Classic Khorinis",
     abbreviation: "CK",
@@ -46,6 +48,7 @@ const servers: ServerResponse[] = [{
     players: 1,
     maxPlayers: 100,
     version: "1.7.0-reveares+1",
+    backgroundImage: "https://www.classickhorinis.de/images/coreBlue/pageBG2.jpg",
 }, {
     name: "Jharkendar Online",
     abbreviation: "JKO",
@@ -55,6 +58,7 @@ const servers: ServerResponse[] = [{
     players: 0,
     maxPlayers: 100,
     version: "1.7.0-reveares+1",
+    backgroundImage: "",
 }, {
     name: "Gothic Online: Untold Chapters",
     abbreviation: "Gucci",
@@ -64,6 +68,7 @@ const servers: ServerResponse[] = [{
     players: 23,
     maxPlayers: 100,
     version: "1.7.0-reveares+1",
+    backgroundImage: "",
 }, {
     name: "Eskalon Online",
     abbreviation: "eso",
@@ -73,4 +78,5 @@ const servers: ServerResponse[] = [{
     players: 40,
     maxPlayers: 100,
     version: "1.7.0-sabrosa+1",
+    backgroundImage: "https://i.ibb.co/D5jb9GX/HG-Eskalon.png",
 },];

@@ -5,11 +5,11 @@ import {Link, useLocation} from "react-router-dom";
 import Icon from "/images/icon.png"
 import {Col, Row} from "react-bootstrap";
 
-// Component height needs to be the same as BrowserWindow.titleBarOverlay.size and css body padding-top
+// Component height needs to be the same as BrowserWindow.titleBarOverlay.size
 export default function Header() {
     const location = useLocation();
     return (
-        <Navbar expand="sm" bg="dark" fixed="top" className="app-navbar app-draggable">
+        <Navbar expand="sm" bg="dark" sticky="top" className="app-navbar app-draggable">
             <Container fluid>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" className="app-non-draggable border-0"/>
                 <Navbar.Brand as={Link} to="/" className="ms-3 app-non-draggable d-none d-sm-inline">

@@ -45,7 +45,7 @@ export default function Settings() {
     }
 
     return (<>
-        <div className="py-5">
+        <div className="pb-5 app-padding-top">
             <h3>Settings</h3>
             <Row className="gy-3">
                 <Col xs={12} as={FormGroup} controlId="gothic-path">
