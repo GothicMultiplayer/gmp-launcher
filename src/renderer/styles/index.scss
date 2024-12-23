@@ -1,7 +1,8 @@
 @import "bootstrap/scss/bootstrap.scss";
 
 body {
-  padding-top: 3.5rem;
+  // Needs to be the same as Header height and BrowserWindow.titleBarOverlay.size
+  padding-top: 40px;
 }
 
 .texturina {
@@ -32,4 +33,17 @@ body {
   display: block;
   height: 100%;
   width: 100%;
+}
+
+.app-navbar {
+  padding: 0;
+}
+
+.app-draggable {
+  app-region: drag;
+  user-select: none;
+}
+
+.app-non-draggable {
+  app-region: no-drag;
 }

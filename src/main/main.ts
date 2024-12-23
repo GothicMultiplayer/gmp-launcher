@@ -38,7 +38,15 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
     },
     autoHideMenuBar: true,
-    icon: "./images/icon.png"
+    icon: "./images/icon.png",
+    backgroundColor: "#212529",
+    titleBarStyle: 'hidden',
+    titleBarOverlay: {
+      color: "#00000000",
+      symbolColor: "#dee2e6",
+      // Needs to be the same as Header height and css body padding-top
+      height: 40
+    },
   });
 
   if (settings.maximized) {
