@@ -303,11 +303,22 @@ async function initConfigs() {
   try {
     const gmpData = await fs.readFile(gmpSettingsPath, 'ascii');
     const parsedGmpData = parse(gmpData);
-    gmpSettings.lang = parsedGmpData.lang ?? gmpSettings.lang;
-    gmpSettings.chatlines = parseInt(parsedGmpData.chatlines, 10) || gmpSettings.chatlines;
-    gmpSettings.chatlog = parsedGmpData.chatlog ?? gmpSettings.chatlog;
-    gmpSettings.toggleWalkmode = parsedGmpData.toggleWalkmode ?? gmpSettings.toggleWalkmode;
-    gmpSettings.disableCapslockInChat = parsedGmpData.disableCapslockInChat ?? gmpSettings.disableCapslockInChat;
+    if (parsedGmpData.lang === undefined || typeof parsedGmpData.lang !== "string") {
+      parsedGmpData.lang = gmpSettings.lang;
+    }
+    if (parsedGmpData.chatlines === undefined) {
+      parsedGmpData.chatlines = parseInt(parsedGmpData.chatlines, 10) || gmpSettings.chatlines;
+    }
+    if (parsedGmpData.chatlog === undefined || typeof parsedGmpData.chatlog !== "boolean") {
+      parsedGmpData.chatlog = gmpSettings.chatlog;
+    }
+    if (parsedGmpData.toggleWalkmode === undefined || typeof parsedGmpData.toggleWalkmode !== "boolean") {
+      parsedGmpData.toggleWalkmode = gmpSettings.toggleWalkmode;
+    }
+    if (parsedGmpData.disableCapslockInChat === undefined || typeof parsedGmpData.disableCapslockInChat !== "boolean") {
+      parsedGmpData.disableCapslockInChat = gmpSettings.disableCapslockInChat;
+    }
+    gmpSettings = parsedGmpData as GmpSettings;
     console.log("gmpSettings", gmpSettings);
   } catch (err) {
     console.error(err);
