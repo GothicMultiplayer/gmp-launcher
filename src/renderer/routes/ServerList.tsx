@@ -4,7 +4,7 @@ import RemoveIcon from "bootstrap-icons/icons/trash-fill.svg?react"
 import StarIcon from "bootstrap-icons/icons/star.svg?react"
 import StarFullIcon from "bootstrap-icons/icons/star-fill.svg?react"
 import OfflineIcon from "bootstrap-icons/icons/cloud-slash.svg?react"
-import {Link} from "react-router-dom";
+import {Link} from "react-router";
 import {Server} from "../interfaces/server";
 import {ChangeEvent, useState} from "react";
 import useServers from "../hooks/useServers";

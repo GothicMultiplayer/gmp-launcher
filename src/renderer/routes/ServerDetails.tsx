@@ -1,7 +1,7 @@
 import {Button, Col, Row} from "react-bootstrap";
 import BackIcon from "bootstrap-icons/icons/arrow-left.svg?react"
 import PlayersIcon from "bootstrap-icons/icons/person-fill.svg?react"
-import {Link, useParams} from "react-router-dom";
+import {Link, useParams} from "react-router";
 import Form from "react-bootstrap/Form";
 import useServer from "../hooks/useServer";
 import {useState} from "react";

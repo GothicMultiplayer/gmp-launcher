@@ -1,6 +1,6 @@
-import "./styles/index.scss"
+import "./styles/index.css"
 import { createRoot } from 'react-dom/client';
-import {RouterProvider} from "react-router-dom";
+import {RouterProvider} from "react-router/dom";
 import React from 'react';
 import router from "./router";
 

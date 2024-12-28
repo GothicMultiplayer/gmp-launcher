@@ -1,4 +1,4 @@
-import {createHashRouter} from "react-router-dom";
+import {createHashRouter} from "react-router";
 import Layout from "./routes/Layout";
 import ServerList from "./routes/ServerList";
 import ServerDetails from "./routes/ServerDetails";

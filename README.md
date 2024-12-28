@@ -1,7 +1,7 @@
 # GMP Launcher
 
 ## Project setup
-Install [Node.js 20.x](https://nodejs.org/en)
+Install [Node.js 22.x](https://nodejs.org/en)
 ```shell
 npm install
 ```

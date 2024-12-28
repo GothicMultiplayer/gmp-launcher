@@ -364,7 +364,8 @@ function setCSP() {
       responseHeaders: {
         ...details.responseHeaders,
         'Content-Security-Policy': [
-          'script-src \'self\'',
+          // Hash required for react-refresh
+          'script-src \'self\' \'sha256-Z2/iFzh9VMlVkEOar1f/oSHWwQk3ve1qk/C2WdsC4Xk=\'',
           'object-src \'none\'',
           'base-uri \'none\''
         ]
