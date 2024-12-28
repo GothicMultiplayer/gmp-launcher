@@ -4,5 +4,11 @@ import { defineConfig } from 'vite';
 export default defineConfig({
     html: {
         cspNonce: "nonce-TODO"
-    }
+    },
+    build: {
+        target: [
+            'esnext',
+            'node22'
+        ],
+    },
 });

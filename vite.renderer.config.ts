@@ -4,5 +4,11 @@ import react from "@vitejs/plugin-react-swc";
 
 // https://vitejs.dev/config
 export default defineConfig({
-    plugins: [react(), svgr()]
+    plugins: [react(), svgr()],
+    build: {
+        target: [
+            'esnext',
+            'chrome130'
+        ],
+    },
 });
