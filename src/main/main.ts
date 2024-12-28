@@ -31,8 +31,8 @@ const createWindow = async () => {
     height: settings.window.height,
     x: settings.window.x,
     y: settings.window.y,
-    minWidth: 400,
-    minHeight: 200,
+    minWidth: 500,
+    minHeight: 300,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
