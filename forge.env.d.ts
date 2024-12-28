@@ -19,6 +19,7 @@ declare interface ElectronAPI {
     getAppVersion: () => Promise<string>;
     connectToServer: (url: string, nickname: string, version: string) => Promise<Result>;
     minimize: () => Promise<void>;
+    onConnect: (callback: (url: string) => void) => void;
 }
 
 declare interface Window {

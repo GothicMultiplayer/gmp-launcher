@@ -1,4 +1,5 @@
 import {app, protocol} from "electron";
+import {mainWindow} from "./main";
 
 const protocolScheme = "gmp";
 
@@ -10,15 +11,16 @@ export function initProtocolHandler() {
 
     app.whenReady().then(() => {
         protocol.handle(protocolScheme, (request) => {
-            const { pathname } = new URL(request.url);
-            const connectParam = "connect/";
-            if (pathname.startsWith(connectParam)) {
-                const connectTo = pathname.slice(connectParam.length);
+            const { host, pathname } = new URL(request.url);
+            if (host === "connect") {
+                const connectTo = decodeURIComponent(pathname.slice("/".length));
                 console.log('protocol', connectTo);
-                return new Response(connectTo, {
-                    status: 201,
-                    headers: { 'content-type': 'text/html' }
-                })
+                if (isHttpUrlSafe(connectTo)) {
+                    mainWindow.webContents.send("connect", connectTo);
+                    return new Response(null, {
+                        status: 201,
+                    });
+                }
             }
 
             console.error('protocol error');
@@ -27,4 +29,9 @@ export function initProtocolHandler() {
             })
         });
     })
+}
+
+function isHttpUrlSafe(str: string): boolean {
+    const url = URL.parse(str);
+    return url?.protocol === 'https:' || url?.protocol === 'http:';
 }

@@ -17,6 +17,7 @@ export const electronApi: ElectronAPI = {
     getAppVersion: () => ipcRenderer.invoke('get-app-version'),
     connectToServer: (url: string, nickname: string, version: string) => ipcRenderer.invoke('connect-to-server', url,  nickname, version),
     minimize: () => ipcRenderer.invoke('minimize'),
+    onConnect: (callback: (url: string) => void) => ipcRenderer.on('connect', (_event, url) => callback(url)),
 };
 
 contextBridge.exposeInMainWorld('electronAPI', electronApi);

@@ -19,7 +19,7 @@ if (app.isPackaged) {
 
 initProtocolHandler();
 
-let mainWindow: BrowserWindow;
+export let mainWindow: BrowserWindow;
 
 const createWindow = () => {
   gmpSettings.lang = app.getLocale().split('-')[0];
