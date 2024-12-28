@@ -89,7 +89,7 @@ export default function ServerList() {
     }
 
     const addServer = () => {
-        if (!addUrl || favoriteServers === undefined) {
+        if (!addUrl || isUrlInvalid || favoriteServers === undefined) {
             return;
         }
 

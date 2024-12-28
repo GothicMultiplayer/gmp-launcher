@@ -1,5 +1,5 @@
 import {Button, FormControl, InputGroup, Modal} from "react-bootstrap";
-import {ChangeEvent} from "react";
+import {ChangeEvent, KeyboardEvent} from "react";
 
 export default function AddServerModal(props: {
     show: boolean,
@@ -9,6 +9,12 @@ export default function AddServerModal(props: {
     onChange: (event: ChangeEvent<HTMLInputElement>) => void,
     onClick: () => void
 }) {
+    const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            props.onClick();
+        }
+    }
+
     return <Modal show={props.show} onHide={props.onHide} centered>
         <Modal.Header closeButton>
             <Modal.Title>Add server</Modal.Title>
@@ -16,7 +22,7 @@ export default function AddServerModal(props: {
         <Modal.Body>
             <InputGroup hasValidation>
                 <FormControl type="url" pattern="https?://.*" required isInvalid={!!props.addUrl && props.invalid}
-                             value={props.addUrl ?? ""} onChange={props.onChange}
+                             value={props.addUrl ?? ""} onChange={props.onChange} onKeyDown={onKeyDown}
                              placeholder="https://host:port"/>
                 <FormControl.Feedback type="invalid">
                     Please enter a valid HTTPS URL.

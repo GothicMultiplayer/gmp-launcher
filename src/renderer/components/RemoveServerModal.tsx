@@ -11,7 +11,7 @@ export default function RemoveServerModal(props: {
             <Modal.Title>Remove server</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            Remove manual added server {props.serverName}?
+            Remove <span className="text-danger-emphasis">{props.serverName}</span> from server list?
         </Modal.Body>
         <Modal.Footer>
             <Button type="button" variant="secondary" onClick={props.onHide}>
