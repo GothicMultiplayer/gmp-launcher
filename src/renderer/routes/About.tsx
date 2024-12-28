@@ -1,4 +1,4 @@
-import {Accordion, Button, Col, Modal, Row} from "react-bootstrap";
+import {Button, Col, Modal, Row} from "react-bootstrap";
 import DiscordIcon from "bootstrap-icons/icons/discord.svg?react"
 import DocsIcon from "bootstrap-icons/icons/journal-code.svg?react"
 import GithubIcon from "bootstrap-icons/icons/github.svg?react"
@@ -64,16 +64,7 @@ export default function About() {
                     enabling you to play on customized dedicated servers.
                 </Col>
 
-                <Accordion as={Col}>
-                    <Accordion.Item eventKey="0">
-                        <Accordion.Header>Changelogs</Accordion.Header>
-                        <Accordion.Body className="text-start">
-                            None
-                        </Accordion.Body>
-                    </Accordion.Item>
-                </Accordion>
-
-                <Col>
+                <Col className="pt-5">
                     <h3>Credits</h3>
                     <div>Former Polish development team (GMPA)</div>
                     <div>Meatbug</div>
