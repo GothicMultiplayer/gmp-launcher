@@ -21,9 +21,8 @@ initProtocolHandler();
 
 export let mainWindow: BrowserWindow;
 
-const createWindow = () => {
-  gmpSettings.lang = app.getLocale().split('-')[0];
-  initConfigs();
+const createWindow = async () => {
+  await initConfigs();
   setCSP();
 
   // Create the browser window.
@@ -300,6 +299,7 @@ async function initConfigs() {
     console.error(err);
   }
 
+  gmpSettings.lang = app.getLocale().split('-')[0];
   try {
     const gmpData = await fs.readFile(gmpSettingsPath, 'ascii');
     const parsedGmpData = parse(gmpData);
