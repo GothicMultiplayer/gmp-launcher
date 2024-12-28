@@ -45,6 +45,7 @@ export default function Settings() {
     }
 
     return (<>
+        <div className="app-background-image blurred-background"></div>
         <div className="pb-5 app-padding-top">
             <h3>Settings</h3>
             <Row className="gy-3">
@@ -54,12 +55,14 @@ export default function Settings() {
                         <Button type="button" variant="primary" onClick={changePath}>
                             Change Path
                         </Button>
-                        <FormControl type="text" placeholder="No path selected" disabled value={launcherSettings.gothicPath}/>
+                        <FormControl type="text" placeholder="No path selected" disabled
+                                     value={launcherSettings.gothicPath}/>
                     </InputGroup>
                 </Col>
                 <Col xs={6} as={FormGroup} controlId="gmp-language">
                     <FormLabel>Language</FormLabel>
-                    <FormSelect aria-label="English" value={gmpSettings.lang} onChange={v => changeGmpSetting("lang", v.target.value)}>
+                    <FormSelect aria-label="English" value={gmpSettings.lang}
+                                onChange={v => changeGmpSetting("lang", v.target.value)}>
                         <option value="en">English</option>
                         <option value="de">German</option>
                         <option value="pl">Polish</option>

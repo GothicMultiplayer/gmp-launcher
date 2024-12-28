@@ -101,6 +101,7 @@ export default function ServerList() {
     }
 
     return (<>
+        <div className="app-background-image blurred-background"></div>
         <div className="pb-5 app-padding-top">
             <Row className="gy-3">
                 <Col xs={12}>
@@ -161,9 +162,11 @@ export default function ServerList() {
                 ))}
             </Row>
 
-            <AddServerModal show={showAddServerModal} onHide={handleCloseAddServerModal} addUrl={addUrl} invalid={isUrlInvalid} onChange={onAddUrlChange}
+            <AddServerModal show={showAddServerModal} onHide={handleCloseAddServerModal} addUrl={addUrl}
+                            invalid={isUrlInvalid} onChange={onAddUrlChange}
                             onClick={addServer}/>
-            <RemoveServerModal show={showRemoveServerModal} onHide={handleCloseRemoveServerModal} serverName={removeServerName} onClick={onRemoveServer}/>
+            <RemoveServerModal show={showRemoveServerModal} onHide={handleCloseRemoveServerModal}
+                               serverName={removeServerName} onClick={onRemoveServer}/>
         </div>
     </>);
 }

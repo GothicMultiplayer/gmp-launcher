@@ -54,8 +54,9 @@ export default function ServerDetails() {
 
     return (
         <>
-            {customBackground &&
-                <div className="blurred-background" style={{backgroundImage: `url(${customBackground})`}}></div>
+            {customBackground
+                ? <div className="blurred-background" style={{backgroundImage: `url(${customBackground})`}}></div>
+                : <div className="app-background-image blurred-background"></div>
             }
 
             <div className="pb-5 app-padding-top">

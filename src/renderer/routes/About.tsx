@@ -20,7 +20,8 @@ export default function About() {
         window.open(link, "_blank");
     };
 
-    return (
+    return (<>
+        <div className="app-background-image blurred-background"></div>
         <div className="pb-5 app-padding-top">
             <Row className="text-center row-cols-1 gy-5">
                 <Col>
@@ -112,5 +113,5 @@ export default function About() {
                 </Modal.Footer>
             </Modal>
         </div>
-    );
-}
+        </>);
+        }
