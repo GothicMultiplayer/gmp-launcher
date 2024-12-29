@@ -72,10 +72,13 @@ export default function ServerDetails() {
                 </Row>
                 <Row>
                     <Col xs={3}>
-                        <div className="d-flex align-items-center">
-                            <PlayersIcon aria-label="Players" className="me-2"/>
-                            {server.players}<span className="text-muted">/{server.maxPlayers}</span>
-                        </div>
+                        {server.online
+                            ? <div className="d-flex align-items-center">
+                                <PlayersIcon aria-label="Players" className="me-2"/>
+                                {server.players}<span className="text-muted">/{server.maxPlayers}</span>
+                            </div>
+                            : <div className="text-danger">Server is offline</div>
+                        }
                         <div>
                             <Form.Group className="mt-3" controlId="nickname">
                                 <Form.Label>Nickname</Form.Label>

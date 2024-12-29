@@ -11,13 +11,14 @@ import {execFile} from "node:child_process";
 import {parse, stringify} from 'ini'
 import {updateElectronApp} from "update-electron-app";
 import * as util from "node:util";
-import {initProtocolHandler} from "./protocolHandler";
+import {handleArgs} from "./argsHandler";
 
 if (app.isPackaged) {
   updateElectronApp();
-}
 
-initProtocolHandler();
+  app.setAsDefaultProtocolClient("gmp");
+  console.log("custom protocol exe set to", process.execPath);
+}
 
 export let mainWindow: BrowserWindow;
 
@@ -56,15 +57,17 @@ const createWindow = async () => {
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+    await mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
+    await mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   }
 
   // Open the DevTools.
   if (process.env.NODE_ENV === "development") {
     mainWindow.webContents.openDevTools();
   }
+
+  await handleArgs(process.argv);
 };
 
 const gotTheLock = app.requestSingleInstanceLock();
@@ -72,13 +75,15 @@ const gotTheLock = app.requestSingleInstanceLock();
 if (!gotTheLock) {
   app.quit()
 } else {
-  app.on('second-instance', () => {
+  app.on('second-instance', (_event: Electron.Event, argv: string[]) => {
     // Someone tried to run a second instance, we should focus our window.
     if (mainWindow) {
       if (mainWindow.isMinimized()) {
         mainWindow.restore();
       }
       mainWindow.focus();
+
+      handleArgs(argv);
     }
   });
 
@@ -152,6 +157,13 @@ async function handleSaveFavorites(_event: IpcMainInvokeEvent, favs: string[]) {
 async function handleSaveNickname(_event: IpcMainInvokeEvent, url: string, nickname: string) {
   nicknames = {...nicknames, [url]: nickname};
   await saveNicknames();
+}
+
+export async function addFavoriteServer(url: string) {
+  if (!favoriteServers.includes(url)) {
+    favoriteServers = [...favoriteServers, url];
+    await saveFavorites();
+  }
 }
 
 const asyncExecFile = util.promisify(execFile);

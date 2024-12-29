@@ -1,12 +1,14 @@
 import {useEffect} from "react";
 import {useNavigate} from "react-router";
 
-export default function useConnectListener() {
+export default function useShowServerListener() {
     const navigate = useNavigate();
     useEffect(() => {
-        window.electronAPI.onConnect(url => {
-            console.log("Connect to url", url);
+        window.electronAPI.onShowServer(url => {
             navigate(`/servers/${encodeURIComponent(url)}`);
         });
+        return () => {
+            window.electronAPI.removeAllShowServerListeners();
+        }
     }, []);
 }
